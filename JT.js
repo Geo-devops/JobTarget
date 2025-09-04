@@ -54,16 +54,21 @@
                 const jobtype = get('jobtype');
 
                 table += `<tr>
+                            <td>${cpc}</td>
+                            <td>${date}</td>
                             <td>${title}</td>
-                            <td>${company}</td>
+                            <td>${companyname}</td>
                             <td><a href="${URL}" target="_blank">${URL}</a></td>
-                            <td>${zipcode}</td>
+                            <td><a href="${applyurlURL}" target="_blank">${applyurl}</a></td>
+                            <td>${postalcode}</td>
                             <td>${state}</td>
                             <td>${description}</td>
                             <td>${salary}</td>
+                            <td>${category}</td>
+                            <td>${id}</td>
                             <td>${jobtype}</td>
-                          </tr>`;
-            }
+                            </tr>`;
+                
 
             table += '</table>';
             document.getElementById('table-container').innerHTML = table;
