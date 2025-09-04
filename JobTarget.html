@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JobTargetCPC</title>
+    <title>JobTarget Feed</title>
 </head>
 <body>
     <h1>XML Content</h1>
-    
-    <!-- Placeholder for output -->
     <pre id="output">Loading...</pre>
 
     <script>
-        fetch('JobTarget.xml')
+        fetch('jobtarget.xml')
             .then(response => {
-                if (!response.ok) throw new Error("Could not fetch XML");
+                if (!response.ok) throw new Error("Network response was not ok");
                 return response.text();
             })
             .then(str => {
+                // Optional: format nicely
                 const formatted = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 document.getElementById('output').innerHTML = formatted;
             })

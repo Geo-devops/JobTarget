@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JobTarget</title>
+    <style>
+        h2 {
+            font-size: medium;
+            text-align: center;
+            color: black;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 95%;
+            margin: 12px auto;
+        }
+
+        th, td {
+            border: 1px solid #888;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: bisque;
+        }
+
+        td a {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">JobTarget</h1>
+    
+    <div id="table-container">Loading jobs...</div>
+
+    <script>
+        fetch('jobtarget.xml')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+            .then(str => {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(str, "application/xml");
+
+                const jobs = xml.getElementsByTagName('job');
+                let table = `<table>
+                    <tr>
+                        <th>Title</th>
+                        <th>companyname</th>
+                        <th>URL</th>
+                        <th>applyurl</th>
+                        <th>Zipcode</th>
+                        <th>State</th>
+                        <th>Description</th>
+                        <th>Salary</th>
+                        <th>Jobtype</th>
+                        <th>category</td>
+                    </tr>`;
+
+                for (let i = 0; i < jobs.length; i++) {
+                    const get = (tag) => jobs[i].getElementsByTagName(tag)[0]?.textContent || '';
+
+                    const title = get('title');
+                    const companyname = get('companyname');
+                    const URL = get('url');
+                    const applyurl = get('applyurl');
+                    const postalcode = get('zipcode') || get('postalcode');
+                    const state = get('state');
+                    const description = get('description');
+                    const salary = get('salary');
+                    const jobtype = get('jobtype');
+                    const category =get('category');
+
+                    table += `<tr>
+                        <td>${title}</td>
+                        <td>${companyname}</td>
+                        <td><a href="${URL}" target="_blank">Link</a></td>
+                        <td><a href="${applyurl}" target="_blank">Link</a></td>
+                        <td>${postalcode}</td>
+                        <td>${state}</td>
+                        <td>${description}</td>
+                        <td>${salary}</td>
+                        <td>${jobtype}</td>
+                        <td>${category}</td>
+                    </tr>`;
+                }
+
+                table += '</table>';
+                document.getElementById('table-container').innerHTML = table;
+            })
+            .catch(Error => {
+                document.getElementById('table-container').innerHTML = `<p>Error Loading XML: ${error}</p>`;
+
+            });
+        </script>
+        </body>
+</html>
