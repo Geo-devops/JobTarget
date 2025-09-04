@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html lang="eng">
-    <head>
-        <title> JobTargetCPC</title>
-    </head>
-    <body>
-        <h1> XML Content</h1>
-        <h1> XML Content</h1>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JobTargetCPC</title>
+</head>
+<body>
+    <h1>XML Content</h1>
+    
+    <!-- Placeholder for output -->
+    <pre id="output">Loading...</pre>
+
     <script>
         fetch('JobTarget.xml')
-        .then(response => { 
-            if (!response.ok) throw new Error ("Could not fetch");
-            return response.text();
-
-        })
-        .then(String => {
-            const formatted = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            document.getElementById('output').innerHTML = formatted;
-        })
-        .catch(Error => {
-            document.getElementById('output'.textcontent = ' Error loading XML:' +Error;)
-        }]); 
+            .then(response => {
+                if (!response.ok) throw new Error("Could not fetch XML");
+                return response.text();
+            })
+            .then(str => {
+                const formatted = str.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                document.getElementById('output').innerHTML = formatted;
+            })
+            .catch(error => {
+                document.getElementById('output').textContent = 'Error loading XML: ' + error;
+            });
     </script>
 </body>
 </html>
